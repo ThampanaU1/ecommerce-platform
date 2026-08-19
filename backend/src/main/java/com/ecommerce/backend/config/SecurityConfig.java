@@ -46,7 +46,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:4200",
                 "http://localhost:4300",
-                "https://wonderful-encouragement-production-06d6.up.railway.app"
+                "https://wonderful-encouragement-production-06d6.up.railway.app",
+                "https://lavish-harmony-production-85ee.up.railway.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
