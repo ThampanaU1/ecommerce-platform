@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --ink: #161A2B;
+  --paper: #FBFAF7;
+  --signal: #3D4FE0;
+  --signal-dark: #2C3BC7;
+  --ember: #E8935A;
+  --slate: #6B7280;
+  --slate-light: #E5E7EB;
+  --stock-green: #1B8A5A;
+  --danger: #D64545;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+a {
+  color: var(--signal);
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+.price, .selling-price, .mrp {
+  font-family: var(--font-mono) !important;
+}

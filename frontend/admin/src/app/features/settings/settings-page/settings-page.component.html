@@ -1,0 +1,84 @@
+<div class="page-container">
+  <h1>Shipping & Tax Settings</h1>
+
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-banner">{{ successMessage }}</div>
+
+  <div class="settings-grid">
+    <div class="settings-box">
+      <h2>Tax Configuration</h2>
+
+      <div class="current-value" *ngIf="taxConfigs.length > 0">
+
+        <table class="history-table">
+          <thead>
+          <tr><th>Name</th><th>Rate</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let tax of taxConfigs">
+            <td>{{ tax.name }}</td>
+            <td>{{ tax.taxPercent }}%</td>
+            <td>
+                <span [class]="tax.isActive ? 'status-active' : 'status-inactive'">
+                  {{ tax.isActive ? 'Active' : 'Past' }}
+                </span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Update Tax Rate</h3>
+      <form (ngSubmit)="onCreateTaxConfig()">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="taxName" [(ngModel)]="taxForm.name" required placeholder="e.g. GST 2026" />
+        </div>
+        <div class="form-group">
+          <label>Tax Percent</label>
+          <input type="number" name="taxPercent" [(ngModel)]="taxForm.taxPercent" required step="0.01" />
+        </div>
+        <button type="submit">Update Tax Rate</button>
+      </form>
+    </div>
+
+    <div class="settings-box">
+      <h2>Shipping Configuration</h2>
+
+      <table class="history-table" *ngIf="shippingRules.length > 0">
+        <thead>
+        <tr><th>Name</th><th>Base Charge</th><th>Free Above</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let rule of shippingRules">
+          <td>{{ rule.name }}</td>
+          <td>₹{{ rule.baseCharge }}</td>
+          <td>{{ rule.minOrderFreeShipping ? '₹' + rule.minOrderFreeShipping : '—' }}</td>
+          <td>
+              <span [class]="rule.isActive ? 'status-active' : 'status-inactive'">
+                {{ rule.isActive ? 'Active' : 'Past' }}
+              </span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h3>Update Shipping Rule</h3>
+      <form (ngSubmit)="onCreateShippingRule()">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="shipName" [(ngModel)]="shippingForm.name" required placeholder="e.g. Standard Nationwide" />
+        </div>
+        <div class="form-group">
+          <label>Base Charge (₹)</label>
+          <input type="number" name="baseCharge" [(ngModel)]="shippingForm.baseCharge" required />
+        </div>
+        <div class="form-group">
+          <label>Free Shipping Above (₹, optional)</label>
+          <input type="number" name="minOrderFreeShipping" [(ngModel)]="shippingForm.minOrderFreeShipping" />
+        </div>
+        <button type="submit">Update Shipping Rule</button>
+      </form>
+    </div>
+  </div>
+</div>

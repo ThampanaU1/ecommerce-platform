@@ -1,0 +1,75 @@
+<div class="page-container">
+  <a routerLink="/products" class="back-link">&larr; Back to Products</a>
+
+  <h1>Pricing{{ product ? ' — ' + product.name : '' }}</h1>
+
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-banner">{{ successMessage }}</div>
+
+  <div *ngIf="!isLoading" class="current-price-box">
+    <h2>Current Price</h2>
+    <div *ngIf="currentPrice; else noPrice">
+      <p><strong>MRP:</strong> ₹{{ currentPrice.mrp }}</p>
+      <p><strong>Selling Price:</strong> ₹{{ currentPrice.sellingPrice }}</p>
+      <p><strong>Valid From:</strong> {{ currentPrice.validFrom }}</p>
+    </div>
+    <ng-template #noPrice>
+      <p>No price has been set for this product yet.</p>
+    </ng-template>
+  </div>
+
+  <div class="set-price-box">
+    <h2>{{ currentPrice ? 'Update Price' : 'Set Initial Price' }}</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="mrp">MRP</label>
+        <input
+          type="number"
+          id="mrp"
+          name="mrp"
+          step="0.01"
+          [(ngModel)]="formData.mrp"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="sellingPrice">Selling Price</label>
+        <input
+          type="number"
+          id="sellingPrice"
+          name="sellingPrice"
+          step="0.01"
+          [(ngModel)]="formData.sellingPrice"
+          required
+        />
+      </div>
+
+      <button type="submit">Save Price</button>
+    </form>
+  </div>
+
+  <div class="history-box" *ngIf="priceHistory.length > 0">
+    <h2>Price History</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>MRP</th>
+        <th>Selling Price</th>
+        <th>Status</th>
+        <th>Valid From</th>
+        <th>Valid To</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let price of priceHistory">
+        <td>₹{{ price.mrp }}</td>
+        <td>₹{{ price.sellingPrice }}</td>
+        <td>{{ price.active ? 'Current' : 'Past' }}</td>
+        <td>{{ price.validFrom }}</td>
+        <td>{{ price.validTo || '—' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

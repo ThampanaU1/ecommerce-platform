@@ -1,0 +1,68 @@
+<div class="page-container">
+  <a routerLink="/products" class="back-link">&larr; Back to Products</a>
+
+  <h1>Inventory{{ product ? ' — ' + product.name : '' }}</h1>
+
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-banner">{{ successMessage }}</div>
+
+  <div *ngIf="!isLoading" class="current-stock-box">
+    <h2>Current Stock</h2>
+    <div *ngIf="inventory; else noInventory">
+      <p><strong>Available:</strong> {{ inventory.availableQuantity }}</p>
+      <p><strong>Reserved:</strong> {{ inventory.reservedQuantity }}</p>
+      <p><strong>Reorder Level:</strong> {{ inventory.reorderLevel }}</p>
+      <p class="low-stock-warning" *ngIf="inventory.availableQuantity <= inventory.reorderLevel">
+        ⚠ Stock is at or below the reorder level
+      </p>
+    </div>
+    <ng-template #noInventory>
+      <p>No inventory has been set up for this product yet.</p>
+    </ng-template>
+  </div>
+
+  <div class="adjust-box" *ngIf="inventory">
+    <h2>Adjust Stock</h2>
+    <form (ngSubmit)="onAdjustStock()">
+      <div class="form-group">
+        <label for="adjustAmount">Quantity Change (use negative to reduce)</label>
+        <input
+          type="number"
+          id="adjustAmount"
+          name="adjustAmount"
+          [(ngModel)]="adjustAmount"
+        />
+      </div>
+      <button type="submit">Apply Adjustment</button>
+    </form>
+  </div>
+
+  <div class="set-box">
+    <h2>{{ inventory ? 'Reset Inventory' : 'Set Initial Inventory' }}</h2>
+    <form (ngSubmit)="onSetInventory()">
+      <div class="form-group">
+        <label for="availableQuantity">Available Quantity</label>
+        <input
+          type="number"
+          id="availableQuantity"
+          name="availableQuantity"
+          [(ngModel)]="setFormData.availableQuantity"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="reorderLevel">Reorder Level</label>
+        <input
+          type="number"
+          id="reorderLevel"
+          name="reorderLevel"
+          [(ngModel)]="setFormData.reorderLevel"
+          required
+        />
+      </div>
+
+      <button type="submit">{{ inventory ? 'Reset' : 'Set Inventory' }}</button>
+    </form>
+  </div>
+</div>

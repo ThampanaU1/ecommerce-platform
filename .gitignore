@@ -1,0 +1,19 @@
+# Backend
+backend/target/
+backend/.idea/
+backend/*.iml
+
+# Admin
+frontend/admin/node_modules/
+frontend/admin/dist/
+frontend/admin/.angular/
+
+# Storefront
+frontend/storefront/node_modules/
+frontend/storefront/dist/
+frontend/storefront/.angular/
+
+# General
+.idea/
+*.iml
+.DS_Store

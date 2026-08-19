@@ -1,0 +1,76 @@
+<div class="page-container">
+  <h1>{{ isEditMode ? 'Edit Product' : 'New Product' }}</h1>
+
+  <div *ngIf="errorMessage" class="error-banner">
+    {{ errorMessage }}
+  </div>
+
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="sku">SKU</label>
+      <input
+        type="text"
+        id="sku"
+        name="sku"
+        [(ngModel)]="formData.sku"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        [(ngModel)]="formData.name"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        [(ngModel)]="formData.description"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select
+        id="category"
+        name="category"
+        [(ngModel)]="formData.categoryId"
+        required
+      >
+        <option [value]="0" disabled>Select a category</option>
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group checkbox-group">
+      <label>
+        <input
+          type="checkbox"
+          name="featured"
+          [(ngModel)]="formData.featured"
+        />
+        Featured product
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Saving...' : 'Save' }}
+      </button>
+      <button type="button" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

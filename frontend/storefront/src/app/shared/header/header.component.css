@@ -1,0 +1,84 @@
+.app-header {
+  background: white;
+  border-bottom: 1px solid var(--slate-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(22, 26, 43, 0.04);
+}
+
+.header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.9rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--signal);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.cart-link,
+.auth-link {
+  position: relative;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.cart-link:hover,
+.auth-link:hover {
+  background-color: #F3F4F6;
+}
+
+.cart-badge {
+  background-color: var(--signal);
+  color: white;
+  border-radius: 50%;
+  padding: 0.05rem 0.4rem;
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  margin-left: 0.3rem;
+}
+
+.admin-link {
+  background-color: var(--ink);
+  color: white;
+  padding: 0.5rem 0.95rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-left: 0.4rem;
+}
+
+.logout-btn {
+  background: white;
+  border: 1px solid var(--slate-light);
+  color: var(--ink);
+  padding: 0.5rem 0.95rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-left: 0.4rem;
+}

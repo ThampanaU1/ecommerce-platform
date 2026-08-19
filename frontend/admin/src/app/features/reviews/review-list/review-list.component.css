@@ -1,0 +1,80 @@
+.page-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+}
+
+.error-banner {
+  background-color: #fdecea;
+  color: #d32f2f;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.review-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.review-table th,
+.review-table td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+  vertical-align: top;
+}
+
+.review-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
+.stars {
+  color: #f5a623;
+  white-space: nowrap;
+}
+
+.comment-cell {
+  max-width: 300px;
+}
+
+.status-pending {
+  color: #e65100;
+  font-weight: 500;
+}
+
+.status-approved {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.status-rejected {
+  color: #d32f2f;
+  font-weight: 500;
+}
+
+.review-table button {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.3rem;
+}
+
+.approve-btn {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+}
+
+.reject-btn {
+  background-color: white;
+  color: #d32f2f;
+  border: 1px solid #d32f2f;
+}

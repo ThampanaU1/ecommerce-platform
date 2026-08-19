@@ -1,0 +1,105 @@
+<div class="page-container">
+  <a routerLink="/" class="back-link">← Back to Products</a>
+
+  <div *ngIf="isLoading" class="loading-state">Loading...</div>
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+
+  <div class="product-detail" *ngIf="product">
+    <div class="image-section">
+      <img
+        [src]="selectedImage || 'https://placehold.co/500x500/F3F4F6/9CA3AF?text=No+Image'"
+        [alt]="product.name"
+        class="main-image"
+      />
+      <div class="thumbnail-row" *ngIf="images.length > 1">
+        <img
+          *ngFor="let img of images"
+          [src]="img"
+          [alt]="product.name"
+          class="thumbnail"
+          [class.active]="img === selectedImage"
+          (click)="selectImage(img)"
+        />
+      </div>
+    </div>
+
+    <div class="info-section">
+      <p class="category-tag">{{ product.categoryName }}</p>
+      <h1>{{ product.name }}</h1>
+      <p class="sku">SKU: {{ product.sku }}</p>
+
+      <div class="price-block" *ngIf="product.sellingPrice; else noPrice">
+        <span class="selling-price">₹{{ product.sellingPrice }}</span>
+        <span class="mrp" *ngIf="product.mrp && product.mrp > product.sellingPrice">₹{{ product.mrp }}</span>
+        <span class="discount-badge" *ngIf="product.mrp && product.mrp > product.sellingPrice">
+          {{ (100 - (product.sellingPrice / product.mrp) * 100) | number:'1.0-0' }}% off
+        </span>
+      </div>
+      <ng-template #noPrice>
+        <p class="price-unavailable">Price unavailable</p>
+      </ng-template>
+
+      <p class="stock" [class.out-of-stock]="product.availableQuantity === 0">
+        {{ product.availableQuantity > 0 ? 'In Stock — ' + product.availableQuantity + ' available' : 'Out of Stock' }}
+      </p>
+
+      <p class="description">{{ product.description }}</p>
+
+      <div class="action-buttons">
+        <button
+          class="add-to-cart-btn"
+          [disabled]="product.availableQuantity === 0 || !product.sellingPrice"
+          (click)="onAddToCart()"
+        >
+          Add to Cart
+        </button>
+
+        <button class="wishlist-btn" (click)="onToggleWishlist()" [class.active]="isInWishlist">
+          {{ isInWishlist ? '♥' : '♡' }}
+        </button>
+      </div>
+
+      <p class="added-confirmation" *ngIf="addedToCart">✓ Added to cart</p>
+      <p class="wishlist-message" *ngIf="wishlistMessage">{{ wishlistMessage }}</p>
+    </div>
+  </div>
+
+  <section class="reviews-section" *ngIf="product">
+    <h2>Customer Reviews</h2>
+
+    <div class="reviews-list" *ngIf="reviews.length > 0">
+      <div class="review-card" *ngFor="let review of reviews">
+        <div class="review-header">
+          <strong>{{ review.customerName }}</strong>
+          <span class="stars">{{ getStars(review.rating) }}</span>
+        </div>
+        <p>{{ review.comment }}</p>
+      </div>
+    </div>
+    <p class="empty-state" *ngIf="reviews.length === 0">No reviews yet. Be the first to review this product!</p>
+
+    <div class="write-review">
+      <h3>Write a Review</h3>
+      <div *ngIf="reviewSubmitted" class="success-banner">Thank you! Your review will appear after approval.</div>
+      <div *ngIf="reviewError" class="error-banner">{{ reviewError }}</div>
+
+      <form *ngIf="!reviewSubmitted" (ngSubmit)="onSubmitReview()">
+        <div class="form-group">
+          <label>Rating</label>
+          <select [(ngModel)]="newRating" name="rating">
+            <option [value]="5">5 - Excellent</option>
+            <option [value]="4">4 - Good</option>
+            <option [value]="3">3 - Average</option>
+            <option [value]="2">2 - Poor</option>
+            <option [value]="1">1 - Terrible</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Comment</label>
+          <textarea [(ngModel)]="newComment" name="comment" rows="3"></textarea>
+        </div>
+        <button type="submit">Submit Review</button>
+      </form>
+    </div>
+  </section>
+</div>

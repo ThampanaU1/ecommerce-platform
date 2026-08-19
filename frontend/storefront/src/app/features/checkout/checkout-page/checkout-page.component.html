@@ -1,0 +1,106 @@
+<div class="page-container">
+
+  <div *ngIf="orderPlaced" class="order-confirmation">
+    <h1>✓ Order Placed!</h1>
+    <p>Your order number is <strong>{{ orderNumber }}</strong></p>
+    <a routerLink="/" class="continue-shopping">Continue Shopping</a>
+  </div>
+
+  <div *ngIf="!orderPlaced">
+    <h1>Checkout</h1>
+
+    <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+
+    <div class="checkout-layout">
+      <div class="address-section">
+        <h2>Shipping Address</h2>
+        <form (ngSubmit)="onPlaceOrder()">
+          <div class="form-group">
+            <label for="label">Label</label>
+            <input type="text" id="label" name="label" [(ngModel)]="address.label" />
+          </div>
+
+          <div class="form-group">
+            <label for="line1">Address Line 1</label>
+            <input type="text" id="line1" name="line1" [(ngModel)]="address.line1" required />
+          </div>
+
+          <div class="form-group">
+            <label for="line2">Address Line 2</label>
+            <input type="text" id="line2" name="line2" [(ngModel)]="address.line2" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" [(ngModel)]="address.city" required />
+            </div>
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" id="state" name="state" [(ngModel)]="address.state" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pincode">Pincode</label>
+              <input type="text" id="pincode" name="pincode" [(ngModel)]="address.pincode" required />
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input type="text" id="country" name="country" [(ngModel)]="address.country" required />
+            </div>
+          </div>
+
+          <button type="submit" [disabled]="isLoading || items.length === 0">
+            {{ isLoading ? 'Placing order...' : 'Place Order' }}
+          </button>
+        </form>
+      </div>
+      <div class="summary-section">
+        <h2>Order Summary</h2>
+        <div class="summary-item" *ngFor="let item of items">
+          <span>{{ item.product.name }} × {{ item.quantity }}</span>
+          <span>₹{{ (item.product.sellingPrice || 0) * item.quantity }}</span>
+        </div>
+
+        <div class="coupon-box">
+          <div class="coupon-input-row" *ngIf="appliedDiscount === 0">
+            <input
+              type="text"
+              placeholder="Coupon code"
+              [(ngModel)]="couponCode"
+              name="couponCode"
+            />
+            <button type="button" (click)="onApplyCoupon()" [disabled]="isValidatingCoupon">
+              {{ isValidatingCoupon ? 'Checking...' : 'Apply' }}
+            </button>
+          </div>
+
+          <div class="coupon-applied" *ngIf="appliedDiscount > 0">
+            <span>{{ couponMessage }}</span>
+            <button type="button" (click)="onRemoveCoupon()" class="remove-coupon-btn">Remove</button>
+          </div>
+
+          <p class="coupon-error" *ngIf="couponError">{{ couponError }}</p>
+        </div>
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>₹{{ subtotal }}</span>
+        </div>
+        <div class="summary-row discount-row" *ngIf="appliedDiscount > 0">
+          <span>Discount</span>
+          <span>-₹{{ appliedDiscount }}</span>
+        </div>
+
+        <div class="summary-total">
+          <span>Estimated Total</span>
+          <span>₹{{ estimatedTotal }}</span>
+        </div>
+        <p class="tax-note">+ tax and shipping calculated at checkout</p>
+      </div>
+    </div>
+  </div>
+
+</div>

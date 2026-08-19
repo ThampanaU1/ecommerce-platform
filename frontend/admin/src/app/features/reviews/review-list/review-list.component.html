@@ -1,0 +1,36 @@
+<div class="page-container">
+  <h1>Product Reviews</h1>
+
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <div *ngIf="isLoading">Loading reviews...</div>
+
+  <table *ngIf="!isLoading" class="review-table">
+    <thead>
+    <tr>
+      <th>Product</th>
+      <th>Customer</th>
+      <th>Rating</th>
+      <th>Comment</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let review of reviews">
+      <td>{{ review.productName }}</td>
+      <td>{{ review.customerName }}</td>
+      <td class="stars">{{ getStars(review.rating) }}</td>
+      <td class="comment-cell">{{ review.comment }}</td>
+      <td>
+        <span [class]="'status-' + review.status.toLowerCase()">{{ review.status }}</span>
+      </td>
+      <td>
+        <button *ngIf="review.status !== 'APPROVED'" (click)="onApprove(review)" class="approve-btn">Approve</button>
+        <button *ngIf="review.status !== 'REJECTED'" (click)="onReject(review)" class="reject-btn">Reject</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!isLoading && reviews.length === 0">No reviews yet.</p>
+</div>

@@ -1,0 +1,48 @@
+<div class="page-container">
+  <h1>Shopping Cart</h1>
+
+  <div *ngIf="items.length === 0" class="empty-cart">
+    <p>Your cart is empty.</p>
+    <a routerLink="/" class="continue-shopping">Continue Shopping</a>
+  </div>
+
+  <div *ngIf="items.length > 0">
+    <table class="cart-table">
+      <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of items">
+        <td class="product-cell">
+          <img
+            [src]="item.product.primaryImageUrl || 'https://via.placeholder.com/60x60.png?text=No+Image'"
+            [alt]="item.product.name"
+          />
+          <span>{{ item.product.name }}</span>
+        </td>
+        <td>₹{{ item.product.sellingPrice }}</td>
+        <td class="quantity-cell">
+          <button (click)="decreaseQuantity(item)">-</button>
+          <span>{{ item.quantity }}</span>
+          <button (click)="increaseQuantity(item)">+</button>
+        </td>
+        <td>₹{{ (item.product.sellingPrice || 0) * item.quantity }}</td>
+        <td>
+          <button class="remove-btn" (click)="removeItem(item)">Remove</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="cart-summary">
+      <p class="total">Total: ₹{{ total }}</p>
+      <a routerLink="/checkout" class="checkout-btn">Proceed to Checkout</a>
+    </div>
+  </div>
+</div>

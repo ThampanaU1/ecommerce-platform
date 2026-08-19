@@ -1,0 +1,106 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Coupons</h1>
+    <button (click)="showForm = !showForm">{{ showForm ? 'Cancel' : '+ Add Coupon' }}</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-banner">{{ successMessage }}</div>
+
+  <div class="create-form" *ngIf="showForm">
+    <h2>New Coupon</h2>
+    <form (ngSubmit)="onCreate()">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Code</label>
+          <input type="text" name="code" [(ngModel)]="formData.code" required placeholder="SAVE10" />
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select name="type" [(ngModel)]="formData.type">
+            <option value="PERCENT">Percent</option>
+            <option value="FLAT">Flat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Value</label>
+          <input type="number" name="value" [(ngModel)]="formData.value" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Min Order Value</label>
+          <input type="number" name="minOrderValue" [(ngModel)]="formData.minOrderValue" />
+        </div>
+        <div class="form-group">
+          <label>Max Discount</label>
+          <input type="number" name="maxDiscount" [(ngModel)]="formData.maxDiscount" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Usage Limit (Total)</label>
+          <input type="number" name="usageLimitTotal" [(ngModel)]="formData.usageLimitTotal" />
+        </div>
+        <div class="form-group">
+          <label>Usage Limit (Per User)</label>
+          <input type="number" name="usageLimitPerUser" [(ngModel)]="formData.usageLimitPerUser" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Start Date</label>
+          <input type="datetime-local" name="startDate" [(ngModel)]="formData.startDate" required />
+        </div>
+        <div class="form-group">
+          <label>End Date</label>
+          <input type="datetime-local" name="endDate" [(ngModel)]="formData.endDate" required />
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Create Coupon</button>
+    </form>
+  </div>
+
+  <div *ngIf="isLoading">Loading coupons...</div>
+
+  <table *ngIf="!isLoading" class="coupon-table">
+    <thead>
+    <tr>
+      <th>Code</th>
+      <th>Type</th>
+      <th>Value</th>
+      <th>Min Order</th>
+      <th>Usage</th>
+      <th>Valid Until</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let coupon of coupons">
+      <td><strong>{{ coupon.code }}</strong></td>
+      <td>{{ coupon.type }}</td>
+      <td>{{ coupon.type === 'PERCENT' ? coupon.value + '%' : '₹' + coupon.value }}</td>
+      <td>₹{{ coupon.minOrderValue }}</td>
+      <td>{{ coupon.usageLimitPerUser || '∞' }} / user, {{ coupon.usageLimitTotal || '∞' }} total</td>
+      <td>{{ coupon.endDate | date:'mediumDate' }}</td>
+      <td>
+          <span [class]="coupon.isActive ? 'status-active' : 'status-inactive'">
+            {{ coupon.isActive ? 'Active' : 'Inactive' }}
+          </span>
+      </td>
+      <td>
+        <button (click)="onToggleStatus(coupon)">
+          {{ coupon.isActive ? 'Deactivate' : 'Activate' }}
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!isLoading && coupons.length === 0">No coupons yet.</p>
+</div>

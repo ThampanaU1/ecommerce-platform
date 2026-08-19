@@ -1,0 +1,54 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Products</h1>
+    <a routerLink="/products/new" class="btn-primary">+ Add Product</a>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-banner">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isLoading">Loading...</div>
+
+  <table *ngIf="!isLoading" class="product-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>SKU</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Status</th>
+      <th>Featured</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.id }}</td>
+      <td>{{ product.sku }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.categoryName }}</td>
+      <td>
+          <span [class]="product.status === 'ACTIVE' ? 'status-active' : 'status-inactive'">
+            {{ product.status }}
+          </span>
+      </td>
+      <td>{{ product.featured ? 'Yes' : 'No' }}</td>
+      <td>
+        <a [routerLink]="['/products', product.id, 'edit']" class="btn-link">Edit</a>
+        <a [routerLink]="['/products', product.id, 'pricing']" class="btn-link">Pricing</a>
+        <a [routerLink]="['/products', product.id, 'inventory']" class="btn-link">Inventory</a>
+        <a [routerLink]="['/products', product.id, 'images']" class="btn-link">Images</a>
+        <button (click)="toggleStatus(product)">
+          {{ product.status === 'ACTIVE' ? 'Deactivate' : 'Activate' }}
+        </button>
+        <button (click)="deleteProduct(product)" class="danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!isLoading && products.length === 0">No products found.</p>
+</div>

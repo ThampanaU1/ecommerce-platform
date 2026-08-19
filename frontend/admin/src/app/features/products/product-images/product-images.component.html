@@ -1,0 +1,40 @@
+<div class="page-container">
+  <a routerLink="/products" class="back-link">&larr; Back to Products</a>
+
+  <h1>Images{{ product ? ' — ' + product.name : '' }}</h1>
+
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-banner">{{ successMessage }}</div>
+
+  <div class="add-image-box">
+    <h2>Add Image</h2>
+    <form (ngSubmit)="onAddImage()">
+      <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input type="text" id="imageUrl" name="imageUrl" [(ngModel)]="newImageUrl" placeholder="https://..." />
+      </div>
+      <div class="form-group checkbox-group">
+        <label>
+          <input type="checkbox" name="isPrimary" [(ngModel)]="newIsPrimary" />
+          Set as primary image
+        </label>
+      </div>
+      <button type="submit">Add Image</button>
+    </form>
+  </div>
+
+  <div *ngIf="isLoading">Loading images...</div>
+
+  <div class="image-grid" *ngIf="!isLoading">
+    <div class="image-card" *ngFor="let image of images">
+      <img [src]="image.imageUrl" [alt]="'Product image'" />
+      <div class="image-actions">
+        <span class="primary-badge" *ngIf="image.isPrimary">Primary</span>
+        <button *ngIf="!image.isPrimary" (click)="onSetPrimary(image)">Set Primary</button>
+        <button class="danger" (click)="onDeleteImage(image)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <p *ngIf="!isLoading && images.length === 0">No images yet.</p>
+</div>

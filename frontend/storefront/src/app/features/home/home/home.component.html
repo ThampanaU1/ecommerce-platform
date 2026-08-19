@@ -1,0 +1,83 @@
+<div class="page-container">
+  <section class="banner-section" *ngIf="banners.length > 0">
+    <a *ngFor="let banner of banners" [routerLink]="banner.linkUrl || '/'" class="banner-link">
+      <img [src]="banner.imageUrl" [alt]="banner.title" />
+    </a>
+  </section>
+
+  <section class="categories-section" *ngIf="categories.length > 0">
+    <h2>Shop by Category</h2>
+    <div class="category-list">
+      <div
+        class="category-chip"
+        [class.selected]="selectedCategoryId === null"
+        (click)="filterByCategory(null)"
+      >
+        All
+      </div>
+      <div
+        class="category-chip"
+        [class.selected]="selectedCategoryId === category.id"
+        *ngFor="let category of categories"
+        (click)="filterByCategory(category.id)"
+      >
+        {{ category.name }}
+      </div>
+    </div>
+  </section>
+
+  <section class="products-section">
+    <div class="products-header">
+      <h2>All Products</h2>
+
+      <div class="controls">
+        <input
+          type="text"
+          class="search-box"
+          placeholder="Search products..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="applyFilters()"
+        />
+
+        <select [(ngModel)]="sortOption" (ngModelChange)="applyFilters()">
+          <option value="default">Sort: Featured</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="name">Name: A-Z</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+    <div *ngIf="isLoading" class="loading-state">Loading products...</div>
+
+    <div class="product-grid" *ngIf="!isLoading">
+      <a class="product-card" *ngFor="let product of products" [routerLink]="['/products', product.id]">
+        <div class="product-image">
+          <img
+            [src]="product.primaryImageUrl || 'https://placehold.co/300x300/F3F4F6/9CA3AF?text=No+Image'"
+            [alt]="product.name"
+          />
+        </div>
+        <div class="product-info">
+          <p class="category-tag">{{ product.categoryName }}</p>
+          <h3>{{ product.name }}</h3>
+
+          <div class="price-row" *ngIf="product.sellingPrice; else noPrice">
+            <span class="selling-price">₹{{ product.sellingPrice }}</span>
+            <span class="mrp" *ngIf="product.mrp && product.mrp > product.sellingPrice">₹{{ product.mrp }}</span>
+          </div>
+          <ng-template #noPrice>
+            <p class="price-unavailable">Price unavailable</p>
+          </ng-template>
+
+          <p class="stock" [class.out-of-stock]="product.availableQuantity === 0">
+            {{ product.availableQuantity > 0 ? 'In Stock' : 'Out of Stock' }}
+          </p>
+        </div>
+      </a>
+    </div>
+
+    <p class="empty-state" *ngIf="!isLoading && products.length === 0">No products match your search.</p>
+  </section>
+</div>

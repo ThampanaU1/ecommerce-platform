@@ -1,0 +1,233 @@
+.page-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 4rem;
+}
+
+/* Banner */
+.banner-section {
+  margin-bottom: 2rem;
+}
+
+.banner-link {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.banner-link img {
+  width: 100%;
+  height: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Categories */
+.categories-section {
+  margin-bottom: 2rem;
+}
+
+.categories-section h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+  color: var(--ink);
+}
+
+.category-list {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.category-chip {
+  cursor: pointer;
+  border: 1px solid var(--slate-light);
+  border-radius: 20px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: white;
+  transition: all 0.12s ease;
+}
+
+.category-chip:hover {
+  border-color: var(--signal);
+}
+
+.category-chip.selected {
+  background-color: var(--signal);
+  border-color: var(--signal);
+  color: white;
+}
+
+/* Products */
+.error-banner {
+  background-color: #FDECEA;
+  color: var(--danger);
+  padding: 0.85rem 1.1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.loading-state,
+.empty-state {
+  padding: 3rem 0;
+  text-align: center;
+  color: var(--slate);
+  font-size: 0.95rem;
+}
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--slate-light);
+}
+
+.products-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.controls {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.search-box {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--slate-light);
+  border-radius: 6px;
+  width: 220px;
+  font-family: var(--font-body);
+  font-size: 0.87rem;
+  background: white;
+}
+
+.search-box:focus {
+  outline: none;
+  border-color: var(--signal);
+}
+
+.controls select {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--slate-light);
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.87rem;
+  background: white;
+  cursor: pointer;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1rem;
+}
+
+.product-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  background: white;
+  border: 1px solid var(--slate-light);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 4px 16px rgba(22, 26, 43, 0.08);
+  border-color: #D1D5DB;
+}
+
+.product-image {
+  width: 100%;
+  height: 180px;
+  background-color: #F9FAFB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 0.9rem;
+}
+
+.category-tag {
+  color: var(--slate);
+  font-size: 0.72rem;
+  margin: 0 0 0.3rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.product-info h3 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin: 0 0 0.55rem 0;
+  line-height: 1.3;
+  font-family: var(--font-body);
+  color: var(--ink);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.selling-price {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.mrp {
+  font-family: var(--font-mono);
+  color: var(--slate);
+  font-size: 0.8rem;
+  text-decoration: line-through;
+}
+
+.price-unavailable {
+  color: var(--slate);
+  font-style: italic;
+  font-size: 0.85rem;
+  margin: 0 0 0.35rem 0;
+}
+
+.stock {
+  font-size: 0.78rem;
+  color: var(--stock-green);
+  font-weight: 500;
+  margin: 0;
+}
+
+.stock.out-of-stock {
+  color: var(--danger);
+}

@@ -1,0 +1,47 @@
+<div class="page-container">
+  <div class="page-header">
+    <h1>Categories</h1>
+    <a routerLink="/categories/new" class="btn-primary">+ Add Category</a>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-banner">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isLoading">Loading...</div>
+
+  <table *ngIf="!isLoading" class="category-table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Display Order</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let category of categories">
+      <td>{{ category.id }}</td>
+      <td>{{ category.name }}</td>
+      <td>{{ category.displayOrder }}</td>
+      <td>
+          <span [class]="category.active ? 'status-active' : 'status-inactive'">
+            {{ category.active ? 'Active' : 'Inactive' }}
+          </span>
+      </td>
+      <td>
+        <a [routerLink]="['/categories', category.id, 'edit']" class="btn-link">Edit</a>
+        <button (click)="toggleStatus(category)">
+          {{ category.active ? 'Deactivate' : 'Activate' }}
+        </button>
+        <button (click)="deleteCategory(category)" class="danger">
+          Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!isLoading && categories.length === 0">No categories found.</p>
+</div>

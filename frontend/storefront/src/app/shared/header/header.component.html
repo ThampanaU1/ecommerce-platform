@@ -1,0 +1,18 @@
+<header class="app-header">
+  <div class="header-inner">
+    <a routerLink="/" class="logo">MyStore</a>
+
+    <div class="header-actions">
+      <a routerLink="/cart" class="cart-link">
+        Cart
+        <span class="cart-badge" *ngIf="itemCount > 0">{{ itemCount }}</span>
+      </a>
+      <a routerLink="/orders" *ngIf="authService.isLoggedIn()" class="auth-link">Orders</a>
+      <a routerLink="/profile" *ngIf="authService.isLoggedIn()" class="auth-link">Profile</a>
+      <a routerLink="/wishlist" *ngIf="authService.isLoggedIn()" class="auth-link">Wishlist</a>
+      <a *ngIf="authService.isAdmin()" href="http://localhost:4200" class="admin-link">Admin Dashboard →</a>
+      <a routerLink="/login" *ngIf="!authService.isLoggedIn()" class="auth-link">Log In</a>
+      <button *ngIf="authService.isLoggedIn()" (click)="onLogout()" class="logout-btn">Log Out</button>
+    </div>
+  </div>
+</header>

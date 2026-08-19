@@ -1,0 +1,17 @@
+package com.ecommerce.backend.order.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class TaxConfigResponse {
+    private Long id;
+    private String name;
+    private BigDecimal taxPercent;
+    private Boolean isActive;
+}

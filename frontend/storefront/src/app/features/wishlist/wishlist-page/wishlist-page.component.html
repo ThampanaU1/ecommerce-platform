@@ -1,0 +1,41 @@
+<div class="page-container">
+  <h1>My Wishlist</h1>
+
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <div *ngIf="isLoading">Loading wishlist...</div>
+
+  <div *ngIf="!isLoading && items.length === 0" class="empty-wishlist">
+    <p>Your wishlist is empty.</p>
+    <a routerLink="/">Browse Products</a>
+  </div>
+
+  <div class="wishlist-grid" *ngIf="!isLoading && items.length > 0">
+    <div class="wishlist-card" *ngFor="let item of items">
+      <a [routerLink]="['/products', item.productId]">
+        <img
+          [src]="item.primaryImageUrl || 'https://placehold.co/300x300?text=No+Image'"
+          [alt]="item.productName"
+        />
+        <h3>{{ item.productName }}</h3>
+      </a>
+
+      <p class="price" *ngIf="item.sellingPrice">₹{{ item.sellingPrice }}</p>
+      <p class="price-unavailable" *ngIf="!item.sellingPrice">Price unavailable</p>
+
+      <p class="stock" [class.out-of-stock]="!item.inStock">
+        {{ item.inStock ? 'In Stock' : 'Out of Stock' }}
+      </p>
+
+      <div class="card-actions">
+        <button
+          class="add-cart-btn"
+          [disabled]="!item.inStock || !item.sellingPrice"
+          (click)="onAddToCart(item)"
+        >
+          Add to Cart
+        </button>
+        <button class="remove-btn" (click)="onRemove(item)">Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
