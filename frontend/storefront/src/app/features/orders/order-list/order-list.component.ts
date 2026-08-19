@@ -1,30 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OrderService, AdminOrder } from '../order.service';
+import { RouterLink } from '@angular/router';
+import { CheckoutService, OrderResponse } from '../../checkout/checkout.service';
 
 @Component({
   selector: 'app-order-list',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './order-list.component.html',
   styleUrl: './order-list.component.css'
 })
 export class OrderListComponent implements OnInit {
 
-  orders: AdminOrder[] = [];
+  orders: OrderResponse[] = [];
   isLoading = true;
   errorMessage = '';
 
-  statusOptions = ['PENDING', 'CONFIRMED', 'PACKED', 'SHIPPED', 'DELIVERED', 'CANCELLED'];
-
-  constructor(private orderService: OrderService) { }
+  constructor(private checkoutService: CheckoutService) { }
 
   ngOnInit(): void {
-    this.loadOrders();
-  }
-
-  loadOrders(): void {
-    this.isLoading = true;
-    this.orderService.getAll().subscribe({
+    this.checkoutService.getMyOrders().subscribe({
       next: (data) => {
         this.orders = data;
         this.isLoading = false;
@@ -32,17 +26,6 @@ export class OrderListComponent implements OnInit {
       error: () => {
         this.errorMessage = 'Failed to load orders';
         this.isLoading = false;
-      }
-    });
-  }
-
-  onStatusChange(order: AdminOrder, newStatus: string): void {
-    this.orderService.updateStatus(order.id, newStatus).subscribe({
-      next: (updated) => {
-        order.status = updated.status;
-      },
-      error: () => {
-        this.errorMessage = 'Failed to update order status';
       }
     });
   }

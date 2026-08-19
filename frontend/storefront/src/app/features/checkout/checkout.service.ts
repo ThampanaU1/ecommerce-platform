@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface AddressRequest {
   label: string;
@@ -49,9 +50,8 @@ export interface OrderResponse {
 })
 export class CheckoutService {
 
-  private readonly apiUrl = 'http://localhost:8081/api/v1/orders';
-  private readonly couponUrl = 'http://localhost:8081/api/v1/coupons';
-
+  private readonly apiUrl = `${environment.apiUrl}/orders`;
+  private readonly couponUrl = `${environment.apiUrl}/coupons`;
   constructor(private http: HttpClient) { }
 
   placeOrder(request: CheckoutRequest): Observable<OrderResponse> {

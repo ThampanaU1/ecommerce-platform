@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface WishlistItem {
   id: number;
@@ -18,8 +19,7 @@ export interface WishlistItem {
 })
 export class WishlistService {
 
-  private readonly apiUrl = 'http://localhost:8081/api/v1/wishlist';
-
+  private readonly apiUrl = `${environment.apiUrl}/wishlist`;
   private wishlistProductIds = new Set<number>();
   private wishlistSubject = new BehaviorSubject<Set<number>>(new Set());
   wishlistIds$ = this.wishlistSubject.asObservable();

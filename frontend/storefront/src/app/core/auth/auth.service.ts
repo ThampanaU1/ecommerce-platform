@@ -2,6 +2,7 @@ import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface RegisterRequest {
   name: string;
@@ -47,7 +48,7 @@ export class AuthService {
   }
 
 
-  private readonly apiUrl = 'http://localhost:8081/api/v1/auth';
+  private readonly apiUrl = `${environment.apiUrl}/auth`;
   private isBrowser: boolean;
 
   constructor(

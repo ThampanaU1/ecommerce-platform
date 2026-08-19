@@ -1,44 +1,36 @@
 <div class="page-container">
-  <h1>Orders</h1>
+  <h1>My Orders</h1>
 
   <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
   <div *ngIf="isLoading">Loading orders...</div>
 
-  <table *ngIf="!isLoading" class="orders-table">
-    <thead>
-    <tr>
-      <th>Order #</th>
-      <th>Customer</th>
-      <th>Items</th>
-      <th>Total</th>
-      <th>Shipping To</th>
-      <th>Placed</th>
-      <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let order of orders">
-      <td>{{ order.orderNumber }}</td>
-      <td>
-        <div>{{ order.customerName }}</div>
-        <div class="customer-email">{{ order.customerEmail }}</div>
-      </td>
-      <td>
-        <div *ngFor="let item of order.items" class="item-line">
-          {{ item.productName }} × {{ item.quantity }}
-        </div>
-      </td>
-      <td>₹{{ order.grandTotal }}</td>
-      <td>{{ order.shippingCity }}, {{ order.shippingState }}</td>
-      <td>{{ order.placedAt | date:'short' }}</td>
-      <td>
-        <select [value]="order.status" (change)="onStatusChange(order, $any($event.target).value)">
-          <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
-        </select>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <div *ngIf="!isLoading && orders.length === 0" class="empty-orders">
+    <p>You haven't placed any orders yet.</p>
+    <a routerLink="/">Start Shopping</a>
+  </div>
 
-  <p *ngIf="!isLoading && orders.length === 0">No orders yet.</p>
+  <div class="order-card" *ngFor="let order of orders">
+    <div class="order-header">
+      <div>
+        <strong>{{ order.orderNumber }}</strong>
+        <span class="order-date">{{ order.placedAt | date:'medium' }}</span>
+      </div>
+      <span class="order-status">{{ order.status }}</span>
+    </div>
+
+    <div class="order-items">
+      <div class="order-item" *ngFor="let item of order.items">
+        <span>{{ item.productName }} × {{ item.quantity }}</span>
+        <span>₹{{ item.lineTotal }}</span>
+      </div>
+    </div>
+
+    <div class="order-footer">
+      <span>Subtotal: ₹{{ order.subtotal }}</span>
+      <span>Discount: ₹{{ order.discountTotal }}</span>
+      <span>Tax: ₹{{ order.taxTotal }}</span>
+      <span>Shipping: ₹{{ order.shippingTotal }}</span>
+      <strong>Total: ₹{{ order.grandTotal }}</strong>
+    </div>
+  </div>
 </div>
