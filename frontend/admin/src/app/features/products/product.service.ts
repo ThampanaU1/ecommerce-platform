@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Product {
   id: number;
@@ -49,8 +50,7 @@ export interface Banner {
   providedIn: 'root'
 })
 export class ProductService {
-
-  private readonly apiUrl = 'http://localhost:8081/api/v1/admin/products';
+  private readonly apiUrl = `${environment.apiUrl}/admin/products`;
 
   constructor(private http: HttpClient) { }
 

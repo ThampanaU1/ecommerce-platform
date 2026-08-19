@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface Banner {
   id: number;
@@ -22,8 +23,7 @@ export interface BannerRequest {
   providedIn: 'root'
 })
 export class BannerService {
-
-  private readonly apiUrl = 'http://localhost:8081/api/v1/admin/banners';
+  private readonly apiUrl = `${environment.apiUrl}/admin/banners`;
 
   constructor(private http: HttpClient) { }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface ProductImage {
   id: number;
@@ -21,7 +22,7 @@ export interface ProductImageRequest {
 })
 export class ProductImageService {
 
-  private readonly apiUrl = 'http://localhost:8081/api/v1/admin/products';
+  private readonly apiUrl = `${environment.apiUrl}/admin/products`;
 
   constructor(private http: HttpClient) { }
 

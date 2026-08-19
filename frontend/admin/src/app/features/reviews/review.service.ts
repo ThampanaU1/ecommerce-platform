@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { environment } from '../../../environments/environment';
 export interface Review {
   id: number;
   productId: number;
@@ -18,8 +18,7 @@ export interface Review {
 })
 export class ReviewService {
 
-  private readonly apiUrl = 'http://localhost:8081/api/v1/admin/reviews';
-
+  private readonly apiUrl = `${environment.apiUrl}/admin/reviews`;
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Review[]> {

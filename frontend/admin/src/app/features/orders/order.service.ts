@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface OrderItem {
   productName: string;
@@ -30,8 +31,7 @@ export interface AdminOrder {
   providedIn: 'root'
 })
 export class OrderService {
-
-  private readonly apiUrl = 'http://localhost:8081/api/v1/admin/orders';
+  private readonly apiUrl = `${environment.apiUrl}/admin/orders`;
 
   constructor(private http: HttpClient) { }
 

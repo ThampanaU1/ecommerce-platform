@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-
+import { environment } from '../../../environments/environment';
 
 export interface LoginRequest {
   email: string;
@@ -22,7 +22,7 @@ export interface AuthResponse {
 })
 export class AuthService {
 
-  private readonly apiUrl = 'http://localhost:8081/api/v1/auth';
+  private readonly apiUrl = `${environment.apiUrl}/auth`;
 
   constructor(private http: HttpClient) { }
 

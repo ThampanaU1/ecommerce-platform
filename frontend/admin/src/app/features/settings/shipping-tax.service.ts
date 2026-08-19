@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface ShippingRule {
   id: number;
@@ -35,9 +36,8 @@ export interface TaxConfigRequest {
 })
 export class ShippingTaxService {
 
-  private readonly shippingUrl = 'http://localhost:8081/api/v1/admin/shipping-rules';
-  private readonly taxUrl = 'http://localhost:8081/api/v1/admin/tax-configs';
-
+  private readonly shippingUrl = `${environment.apiUrl}/admin/shipping-rules`;
+  private readonly taxUrl = `${environment.apiUrl}/admin/tax-configs`;
   constructor(private http: HttpClient) { }
 
   getAllShippingRules(): Observable<ShippingRule[]> {
