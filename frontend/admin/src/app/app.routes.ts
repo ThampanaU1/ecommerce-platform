@@ -14,6 +14,7 @@ import { SettingsPageComponent } from './features/settings/settings-page/setting
 import { BannerListComponent } from './features/banners/banner-list/banner-list.component';
 import { authGuard } from './core/auth/auth.guard';
 import { ReviewListComponent } from './features/reviews/review-list/review-list.component';
+import { UserListComponent } from './features/users/user-list/user-list.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,5 +33,6 @@ export const routes: Routes = [
   { path: 'settings', component: SettingsPageComponent, canActivate: [authGuard] },
   { path: 'banners', component: BannerListComponent, canActivate: [authGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'reviews', component: ReviewListComponent, canActivate: [authGuard] }
+  { path: 'reviews', component: ReviewListComponent, canActivate: [authGuard] },
+  { path: 'users', component: UserListComponent, canActivate: [authGuard] }
 ];

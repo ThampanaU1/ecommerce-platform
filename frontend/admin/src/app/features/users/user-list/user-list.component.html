@@ -1,0 +1,50 @@
+<div class="page-container">
+  <h1>Users</h1>
+
+  <div *ngIf="errorMessage" class="error-banner">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" class="success-banner">{{ successMessage }}</div>
+
+  <div *ngIf="isLoading">Loading users...</div>
+
+  <table *ngIf="!isLoading" class="user-table">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Roles</th>
+      <th>Status</th>
+      <th>Joined</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <label class="role-checkbox" *ngFor="let role of availableRoles">
+          <input
+            type="checkbox"
+            [checked]="hasRole(user, role)"
+            (change)="toggleRole(user, role)"
+          />
+          {{ role }}
+        </label>
+      </td>
+      <td>
+          <span [class]="user.status === 'ACTIVE' ? 'status-active' : 'status-inactive'">
+            {{ user.status }}
+          </span>
+      </td>
+      <td>{{ user.createdAt | date:'mediumDate' }}</td>
+      <td>
+        <button (click)="toggleStatus(user)">
+          {{ user.status === 'ACTIVE' ? 'Disable' : 'Enable' }}
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!isLoading && users.length === 0">No users found.</p>
+</div>

@@ -14,12 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.ecommerce.backend.user.dto.UpdateProfileRequest;
 import com.ecommerce.backend.common.exception.ResourceNotFoundException;
-
+import com.ecommerce.backend.common.exception.BadRequestException;
+import com.ecommerce.backend.user.dto.AdminUserResponse;
+import com.ecommerce.backend.user.dto.UpdateRolesRequest;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -28,6 +30,61 @@ public class AuthService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+
+    @Transactional(readOnly = true)
+    public List<AdminUserResponse> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(this::toAdminResponse)
+                .toList();
+    }
+
+    @Transactional
+    public AdminUserResponse updateUserRoles(Long userId, UpdateRolesRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        Set<Role> newRoles = new HashSet<>();
+        for (String roleName : request.getRoles()) {
+            Role role = roleRepository.findByName(roleName)
+                    .orElseThrow(() -> new BadRequestException("Invalid role: " + roleName));
+            newRoles.add(role);
+        }
+
+        user.setRoles(newRoles);
+        user.setUpdatedAt(LocalDateTime.now());
+        User updated = userRepository.save(user);
+
+        return toAdminResponse(updated);
+    }
+
+    @Transactional
+    public AdminUserResponse updateUserStatus(Long userId, String status) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        user.setStatus(status);
+        user.setUpdatedAt(LocalDateTime.now());
+        User updated = userRepository.save(user);
+
+        return toAdminResponse(updated);
+    }
+
+    private AdminUserResponse toAdminResponse(User user) {
+        Set<String> roleNames = user.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.toSet());
+
+        return new AdminUserResponse(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getStatus(),
+                roleNames,
+                user.getCreatedAt()
+        );
+    }
+
+
 
 
     @Transactional
